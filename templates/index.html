@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RE-mindr — Say it tonight. Get pushed tomorrow.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Great+Vibes&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky:#EAF4FC;
+    --sky-deep:#D7E9F8;
+    --navy:#132540;
+    --navy-soft:#2A3F5C;
+    --blue:#3FA9E0;
+    --blue-deep:#1F6FB2;
+    --amber:#F0A050;
+    --white:#FFFFFF;
+    --ink-soft: rgba(19,37,64,0.68);
+    --line: rgba(19,37,64,0.10);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--sky);
+    color:var(--navy);
+    font-family:'Manrope', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:1160px;margin:0 auto;padding:0 32px;}
+  h1,h2,h3,.wordmark{font-family:'Fraunces', serif;}
+
+  a{color:inherit;}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(234,244,252,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 0;
+  }
+  .brand{display:flex;align-items:center;gap:8px;text-decoration:none;}
+  .brand img{width:36px;height:36px;display:block;}
+  .brand .wordmark{
+    font-family:'Great Vibes', cursive;
+    font-size:34px;
+    font-weight:400;
+    color:var(--navy);
+    line-height:1;
+    padding-top:6px; /* optically centers the script baseline against the logo */
+  }
+  .nav-links{display:flex;gap:36px;font-size:15px;font-weight:500;}
+  .nav-links a{text-decoration:none;color:var(--navy-soft);transition:color .2s;}
+  .nav-links a:hover{color:var(--navy);}
+  .nav-cta{
+    background:var(--navy);color:var(--white);
+    padding:10px 20px;border-radius:100px;
+    font-size:14px;font-weight:600;text-decoration:none;
+    white-space:nowrap;
+  }
+  .menu-toggle{display:none;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:88px 0 60px;
+  }
+  .eyebrow{
+    font-size:14px;color:var(--blue-deep);font-weight:700;
+    margin:0 0 18px;
+  }
+  .hero h1{
+    font-size:52px;line-height:1.08;font-weight:500;
+    margin:0 0 22px;letter-spacing:-0.01em;
+  }
+  .hero h1 em{font-style:italic;color:var(--blue-deep);}
+  .hero p.lede{
+    font-size:19px;line-height:1.55;color:var(--ink-soft);
+    max-width:460px;margin:0 0 34px;
+  }
+  .hero-ctas{display:flex;gap:14px;align-items:center;flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--navy);color:var(--white);
+    padding:15px 26px;border-radius:100px;
+    font-size:15px;font-weight:700;text-decoration:none;
+    display:inline-block;transition:transform .18s ease, background .18s ease;
+  }
+  .btn-primary:hover{background:var(--blue-deep);transform:translateY(-1px);}
+  .btn-ghost{
+    padding:15px 8px;font-size:15px;font-weight:600;
+    text-decoration:none;color:var(--navy);
+    border-bottom:2px solid var(--navy);
+  }
+
+  .phone-stage{
+    position:relative;
+    display:flex;justify-content:center;align-items:center;
+    padding:20px 0;
+  }
+  .phone-glow{
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    width:380px;height:380px;
+    background:radial-gradient(circle, rgba(63,169,224,0.35), rgba(63,169,224,0) 70%);
+    filter:blur(10px);
+    z-index:0;
+  }
+  .phone-frame{
+    position:relative;z-index:1;
+    width:262px;
+    background:linear-gradient(160deg, #1B2C48, #0E1B30);
+    border-radius:46px;
+    padding:14px;
+    box-shadow:0 40px 70px -20px rgba(19,37,64,0.45), 0 0 0 1px rgba(255,255,255,0.06) inset;
+    transform:rotate(3deg);
+  }
+  .phone-frame img{
+    display:block;width:100%;border-radius:34px;
+  }
+  .phone-notch{
+    position:absolute;top:26px;left:50%;transform:translateX(-50%);
+    width:70px;height:18px;background:#0E1B30;border-radius:10px;z-index:2;
+  }
+
+  /* ---------- LOGO STRIP ---------- */
+  .strip{
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:26px 0;
+  }
+  .strip .wrap{
+    display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:16px;
+    font-size:14px;color:var(--ink-soft);font-weight:600;
+    letter-spacing:0.01em;
+  }
+
+  /* ---------- PHILOSOPHY ---------- */
+  .philosophy{padding:110px 0 100px;}
+  .philosophy .head{
+    max-width:600px;margin:0 0 60px;
+  }
+  .philosophy .head h2{
+    font-size:38px;font-weight:500;line-height:1.2;margin:0 0 18px;
+  }
+  .philosophy .head p{
+    font-size:17px;color:var(--ink-soft);line-height:1.6;margin:0;
+  }
+  .phil-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:0;
+    border-top:1px solid var(--line);
+  }
+  .phil-item{
+    padding:40px 40px 40px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .phil-item:nth-child(odd){border-right:1px solid var(--line);padding-right:40px;}
+  .phil-item:nth-child(even){padding-left:40px;}
+  .phil-item h3{
+    font-size:21px;font-weight:500;margin:0 0 12px;
+  }
+  .phil-item p{
+    font-size:15.5px;color:var(--ink-soft);line-height:1.6;margin:0;
+  }
+  .phil-item .mark{
+    display:inline-block;width:8px;height:8px;border-radius:50%;
+    background:var(--amber);margin-bottom:16px;
+  }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .how{padding:100px 0 110px;background:var(--white);border-top:1px solid var(--line);}
+  .how .head{max-width:560px;margin:0 auto 64px;text-align:center;}
+  .how .head h2{font-size:38px;font-weight:500;margin:0 0 16px;}
+  .how .head p{font-size:17px;color:var(--ink-soft);margin:0;}
+  .steps{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+    counter-reset:step;
+  }
+  .step{
+    position:relative;padding:0 30px;
+    border-left:1px solid var(--line);
+  }
+  .step:first-child{border-left:none;padding-left:0;}
+  .step:last-child{padding-right:0;}
+  .step .num{
+    font-family:'Fraunces',serif;font-style:italic;
+    font-size:15px;color:var(--blue-deep);margin-bottom:22px;display:block;
+  }
+  .step h3{font-size:20px;font-weight:500;margin:0 0 12px;}
+  .step p{font-size:15px;color:var(--ink-soft);line-height:1.6;margin:0 0 20px;}
+  .step-sample{
+    background:var(--sky);border-radius:14px;padding:16px 18px;
+    font-size:14px;color:var(--navy-soft);border:1px solid var(--line);
+  }
+  .step-sample .tag{
+    display:block;font-size:11px;font-weight:700;text-transform:uppercase;
+    letter-spacing:0.06em;color:var(--blue-deep);margin-bottom:6px;
+  }
+
+  /* ---------- CELEBRATION ---------- */
+  .celebrate{
+    padding:100px 0;
+    background:linear-gradient(180deg, var(--sky) 0%, var(--sky-deep) 100%);
+  }
+  .celebrate .inner{
+    display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;
+  }
+  .celebrate h2{font-size:36px;font-weight:500;line-height:1.2;margin:0 0 20px;}
+  .celebrate p{font-size:17px;color:var(--ink-soft);line-height:1.6;margin:0 0 0;max-width:460px;}
+  .win-card{
+    background:var(--white);border-radius:22px;padding:30px 30px 34px;
+    box-shadow:0 30px 60px -30px rgba(19,37,64,0.3);
+    border:1px solid var(--line);
+  }
+  .win-card .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(240,160,80,0.14);color:#B5731E;
+    font-size:13px;font-weight:700;padding:7px 14px;border-radius:100px;
+    margin-bottom:18px;
+  }
+  .win-card .badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--amber);}
+  .win-card ul{list-style:none;margin:0;padding:0;}
+  .win-card li{
+    display:flex;align-items:center;gap:12px;
+    padding:13px 0;border-top:1px solid var(--line);
+    font-size:15px;color:var(--navy);
+  }
+  .win-card li:first-of-type{border-top:none;}
+  .win-card .check{
+    width:22px;height:22px;border-radius:50%;background:var(--navy);
+    color:var(--white);font-size:12px;display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+
+  /* ---------- CTA ---------- */
+  .final-cta{
+    padding:120px 0;text-align:center;
+  }
+  .final-cta h2{
+    font-size:44px;font-weight:500;line-height:1.15;margin:0 0 20px;
+    max-width:680px;margin-left:auto;margin-right:auto;
+  }
+  .final-cta p{font-size:17px;color:var(--ink-soft);margin:0 0 36px;}
+  .email-form{
+    display:flex;justify-content:center;gap:10px;max-width:420px;margin:0 auto;flex-wrap:wrap;
+  }
+  .email-form input{
+    flex:1;min-width:220px;
+    padding:15px 18px;border-radius:100px;
+    border:1px solid var(--line);font-size:15px;font-family:'Manrope',sans-serif;
+    background:var(--white);color:var(--navy);
+  }
+  .email-form input:focus{outline:2px solid var(--blue);outline-offset:2px;}
+  .email-note{font-size:13px;color:var(--ink-soft);margin-top:14px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--line);padding:40px 0;
+  }
+  footer .wrap{
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+  }
+  .foot-brand{display:flex;align-items:center;gap:8px;}
+  .foot-brand img{width:26px;height:26px;}
+  .foot-brand span{font-family:'Great Vibes', cursive;font-size:26px;color:var(--navy);padding-top:4px;}
+  footer .foot-note{font-size:13px;color:var(--ink-soft);}
+
+  @media (max-width:860px){
+    .nav-links{display:none;}
+    .hero{padding-top:56px;}
+    .hero .wrap{grid-template-columns:1fr !important;}
+    .hero h1{font-size:38px;}
+    .phone-stage{order:-1;margin-bottom:20px;}
+    .phone-frame{width:210px;}
+    .phil-grid{grid-template-columns:1fr;}
+    .phil-item:nth-child(odd){border-right:none;padding-right:0;}
+    .phil-item:nth-child(even){padding-left:0;}
+    .steps{grid-template-columns:1fr;gap:44px;}
+    .step{border-left:none;padding:0;}
+    .celebrate .inner{grid-template-columns:1fr;gap:36px;}
+    .final-cta h2{font-size:30px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="#">
+        <img src="/static/remindr_logo.png" alt="RE-mindr logo">
+        <span class="wordmark">RE-mindr</span>
+      </a>
+      <div class="nav-links">
+        <a href="#philosophy">Philosophy</a>
+        <a href="#how">How it works</a>
+        <a href="#celebrate">The win screen</a>
+      </div>
+
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap" style="display:grid;grid-template-columns:1.05fr 0.95fr;gap:40px;align-items:center;">
+    <div>
+      <p class="eyebrow">FOR PEOPLE WHO KEEP FORGETTING THEIR OWN PLANS</p>
+      <h1>Say what you<br>want. <em>We'll push<br>you toward it.</em></h1>
+      <p class="lede">Write your intention tonight, in your own messy words. RE-mindr turns it into a short, timed push — so tomorrow-you doesn't have to remember, just act.</p>
+      <div class="hero-ctas">
+        <a class="btn-ghost" href="#how">See how it works</a>
+      </div>
+    </div>
+    <div class="phone-stage">
+      <div class="phone-glow"></div>
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <img src="/static/app_screen_cropped.png" alt="RE-mindr app screen showing an intention field and a pending reminder">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="wrap">
+    <span>NO STREAKS</span>
+    <span>NO GUILT SCORES</span>
+    <span>NO DASHBOARDS TO MAINTAIN</span>
+    <span>JUST TONIGHT'S ONE THING</span>
+  </div>
+</div>
+
+<section class="philosophy" id="philosophy">
+  <div class="wrap">
+    <div class="head">
+      <h2>Most reminder apps punish you. This one doesn't.</h2>
+      <p>Every habit tracker eventually turns into a scoreboard of your failures.</p>
+      <p>RE-mindr was built backwards from that — it only ever shows you what you did, never what you missed.</p>
+    </div>
+    <div class="phil-grid">
+      <div class="phil-item">
+        <span class="mark"></span>
+        <h3>One intention, not a list</h3>
+        <p>You write a single thing you actually want to do — not a to-do list you'll abandon by Wednesday. Simplicity is the point, not a limitation.</p>
+      </div>
+      <div class="phil-item">
+        <span class="mark"></span>
+        <h3>Your words, sharpened by AI</h3>
+        <p>You write it messy: "I want to exercise tomorrow." We turn it into the push that actually moves you: short, direct, timed to land exactly when you need it.</p>
+      </div>
+      <div class="phil-item">
+        <span class="mark"></span>
+        <h3>Skips disappear. Wins don't.</h3>
+        <p>Tap "Skip" and it's simply gone — no record, no red mark. Tap "Done" and it's saved, ready to be celebrated at the end of your day.</p>
+      </div>
+      <div class="phil-item">
+        <span class="mark"></span>
+        <h3>A nudge, not an alarm</h3>
+        <p>The reminder arrives like a text from a friend who believes in you — not a blaring alarm demanding compliance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="head">
+      <h2>Three steps. That's the whole app.</h2>
+      <p>No onboarding flow, no settings to configure before it's useful.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="num">i.</span>
+        <h3>Say it, any time</h3>
+        <p>Write your intention tonight or first thing in the morning — whenever it's actually on your mind. Pick a time to be reminded.</p>
+        <div class="step-sample">
+          <span class="tag">You write</span>
+          "I have an important business meeting tomorrow"
+        </div>
+      </div>
+      <div class="step">
+        <span class="num">ii.</span>
+        <h3>We push it back, sharper</h3>
+        <p>RE-mindr rewrites it into something built to move you — tone adapts, whether the moment calls for energy or gentleness.</p>
+        <img src="/static/notification_sample.png" alt="RE-mindr notification reading 'Business meeting time! Bring your A-game and own the room!' with Done and Skip actions" style="width:100%;border-radius:16px;box-shadow:0 20px 40px -20px rgba(19,37,64,0.25);">
+      </div>
+      <div class="step">
+        <span class="num">iii.</span>
+        <h3>You choose, honestly</h3>
+        <p>Tap "Done" or "Skip." That's the entire interaction. No streak breaks, no explanations required.</p>
+        <div class="step-sample">
+          <span class="tag">You decide</span>
+          Done → saved to today's completed reminders. Skip → quietly forgotten.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="celebrate" id="celebrate">
+  <div class="wrap">
+    <div class="inner">
+      <div>
+        <h2>At the end of the day, you only see what you did.</h2>
+        <p>No percentages. No "you missed 3 of 5." Just a quiet, honest look at what you actually followed through on — because that's the only number that builds confidence instead of eroding it.</p>
+      </div>
+      <div class="win-card">
+        <span class="badge">Completed Reminders</span>
+        <ul>
+          <li><span class="check">✓</span> Went for a walk at 10am</li>
+          <li><span class="check">✓</span> Called mom back</li>
+          <li><span class="check">✓</span> Sent the job application</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta" id="join">
+  <div class="wrap">
+    <h2>You don't need another tracker. You need one push, at the right time.</h2>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-brand">
+      <img src="/static/remindr_logo.png" alt="RE-mindr logo">
+      <span class="wordmark">RE-mindr</span>
+    </div>
+    <p class="foot-note">Built for people who mean it, then forget. © 2026 RE-mindr.</p>
+  </div>
+</footer>
+
+</body>
+</html>
